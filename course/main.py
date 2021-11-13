@@ -1,9 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
 from threading import Thread
+
 import channel_protocol
-from old_functions import get_intersect_line_and_circle
 
 class Point:
     def __init__(self, x, y):
@@ -68,7 +67,7 @@ class General:
         return [np.random.randint(n) for i in range(n)]
 
     def byzantine(self, screen):
-        #step 1
+        # step 1
         # for all send my_value
         my_value = self.get_my_value_s1()
         n = len(self.connections) + 1
@@ -96,9 +95,9 @@ class General:
             values[index] = new_value
         values[self.index] = my_value
         print(f"{self.index}: {values}\n", end="")
-        #step 2
+        # step 2
         # make tuple(..., value_i, ...)
-        #step 3
+        # step 3
         # for all send tuple
         for i in range(len(self.connections)):
             conn = self.connections[i]
@@ -126,7 +125,7 @@ class General:
 
         print(f"{self.index}: {values_arr}\n", end="")
 
-        #step 4
+        # step 4
         # for tuples compute true values
 
         # этап голосования
@@ -165,10 +164,6 @@ class General:
             conn.stop()
 
 
-
-
-
-
 def main():
     screen = Screen(12, 12, 0, 0, 3)
     pos = [3, 3]
@@ -204,24 +199,6 @@ def main():
         result_values = camera.get_byzantine_result()
         print(f"{camera.index}: {result_values}\n", end="")
 
-    pass
-
-
-
-def test():
-    con = channel_protocol.Connection()
-
-    con.send_message("tttt", 1)
-    con.send_message("111", 1)
-    con.send_message("222", 1)
-    con.send_message("t333", 1)
-
-    print(f"{con.get_message(0)}\n", end="")
-
-    while True:
-        mes = con.get_message(0)
-        if mes is not None:
-            print(f"{mes}\n", end="")
 
 if __name__ == "__main__":
     main()
